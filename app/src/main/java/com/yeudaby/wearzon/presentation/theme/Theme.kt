@@ -1,9 +1,11 @@
 package com.yeudaby.wearzon.presentation.theme
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.wear.compose.material.Colors
 import androidx.wear.compose.material.MaterialTheme
 import com.yeudaby.wearzon.R
 
@@ -15,8 +17,11 @@ val frankRuhiLibre = FontFamily(
 fun WearzonTheme(
     content: @Composable () -> Unit
 ) {
-    // todo
     MaterialTheme(
+        colors = Colors(
+            primary = Color(0xffd9d9d9),
+            secondary = Color(0xff4d4d4d)
+        ),
         content = content
     )
 }
