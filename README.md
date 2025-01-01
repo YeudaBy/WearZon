@@ -1,6 +1,6 @@
 <div dir="rtl">
 
-<img src="./assets/graphic-play.png" alt="play graphic"/>
+<img src="./assets/gr1024x500.png" alt="play graphic"/>
 <h2>
 ווירזון  - WearZon
 </h2>
