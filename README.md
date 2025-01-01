@@ -1,6 +1,6 @@
 <div dir="rtl">
 
-<img src="./assets/gr1024x500.png" alt="play graphic"/>
+<img src="./assets/gr1024x500.png" alt="play graphic" height="300px"/>
 <h2>
 ווירזון  - WearZon
 </h2>
@@ -18,7 +18,7 @@
   המועדף</a> עליכם, להציג את הטקסט עם ניקוד או בלי, וכן את גודל הטקסט.
 </p>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7ukRXciiDMM?si=hu1KDvQmT-4ZbM5k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+ <img src="./assets/videoplayback-ezgif.com-video-to-gif-converter.gif" width="200" height="200" />
 
 
 <h5>תכנים זמינים:</h5>
@@ -31,8 +31,8 @@
 
 <h5 id="nusach">נוסחים זמינים:</h5>
 <ul>
-  <li>ברכת המזון</li>
-  <li>תפילת הדרך</li>
-  <li>ברכת ״אשר יצר״</li>
+  <li>אשכנז</li>
+  <li>ספרד</li>
+  <li>עדות המזרח</li>
 </ul>
 </div>
