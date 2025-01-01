@@ -1,26 +1,26 @@
 package com.yeudaby.wearzon.presentation.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
+import androidx.compose.ui.res.stringResource
 import androidx.wear.compose.foundation.lazy.items
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.RadioButton
-import androidx.wear.compose.material.Switch
-import androidx.wear.compose.material.Text
+import com.google.android.horologist.annotations.ExperimentalHorologistApi
+import com.google.android.horologist.compose.layout.ScalingLazyColumn
+import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults
+import com.google.android.horologist.compose.layout.ScreenScaffold
+import com.google.android.horologist.compose.layout.rememberResponsiveColumnState
+import com.google.android.horologist.compose.material.ResponsiveListHeader
+import com.google.android.horologist.compose.material.SecondaryTitle
+import com.google.android.horologist.compose.material.Title
+import com.google.android.horologist.compose.material.ToggleChip
+import com.google.android.horologist.compose.material.ToggleChipToggleControl
+import com.yeudaby.wearzon.R
 import com.yeudaby.wearzon.presentation.data.FontSize
 import com.yeudaby.wearzon.presentation.data.NusachOption
 import com.yeudaby.wearzon.presentation.data.PreferencesKeys
@@ -28,93 +28,94 @@ import com.yeudaby.wearzon.presentation.data.readSetting
 import com.yeudaby.wearzon.presentation.data.saveSetting
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalHorologistApi::class)
 @Composable
 fun SettingsScreen() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val nikud by readSetting(context, PreferencesKeys.NIKUD).collectAsState(initial = false)
+    val nikud by readSetting(context, PreferencesKeys.NIKUD).collectAsState(initial = true)
 
     val nusach by readSetting(
         context,
         PreferencesKeys.NUSACH
-    ).collectAsState(initial = NusachOption.ASHKENAZ)
+    ).collectAsState(initial = NusachOption.ASHKENAZ.name)
 
     val fontSize by readSetting(
         context,
         PreferencesKeys.FONT_SIZE
-    ).collectAsState(initial = FontSize.MEDIUM)
+    ).collectAsState(initial = FontSize.MEDIUM.name)
 
     val nusachOptions = NusachOption.entries.toTypedArray()
+    val fontSizeOptions = FontSize.entries.toTypedArray()
 
-    ScalingLazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        item {
-            Text(
-                "הגדרות",
-                style = MaterialTheme.typography.title2,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-        }
+    val columnState = rememberResponsiveColumnState(
+        contentPadding = ScalingLazyColumnDefaults.padding(
+            first = ScalingLazyColumnDefaults.ItemType.Text,
+            last = ScalingLazyColumnDefaults.ItemType.Chip
+        )
+    )
 
-        item {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 8.dp)
-            ) {
-                Text("ניקוד", style = MaterialTheme.typography.body1)
-                Spacer(modifier = Modifier.weight(1f))
-                Switch(
-                    checked = nikud ?: false,
-                    onCheckedChange = {
-                        scope.launch { saveSetting(context, PreferencesKeys.NIKUD, it) }
-                    }
+    ScreenScaffold(scrollState = columnState) {
+        ScalingLazyColumn(
+            columnState = columnState,
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            item {
+                ResponsiveListHeader {
+                    Title(stringResource(R.string.settings))
+                }
+            }
+
+            item {
+                ToggleChip(
+                    checked = nikud ?: true,
+                    onCheckedChanged = {
+                        scope.launch {
+                            saveSetting(context, PreferencesKeys.NIKUD, it)
+                        }
+                    },
+                    label = stringResource(R.string.showNikud),
+                    toggleControl = ToggleChipToggleControl.Switch
                 )
             }
-        }
 
-        items(nusachOptions) { option ->
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp)
-                    .clickable {
-                        scope.launch {
-                            saveSetting(
-                                context,
-                                PreferencesKeys.NUSACH,
-                                option.toString()
-                            )
-                        }
-                    }
-            ) {
-                RadioButton(
-                    selected = nusach == option,
-                    onClick = {
-                        scope.launch {
-                            saveSetting(
-                                context,
-                                PreferencesKeys.NUSACH,
-                                option.toString()
-                            )
-                        }
-                    }
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(option.toString(), style = MaterialTheme.typography.body1)
+            item {
+                SecondaryTitle(stringResource(R.string.choose_nusach))
             }
-        }
 
-        item {
-            Text(
-                "גודל פונט",
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+            items(nusachOptions) { option ->
+                ToggleChip(
+                    checked = nusach == option.name,
+                    onCheckedChanged = {
+                        scope.launch {
+                            Log.d("SettingsScreen", "option: $option, nusach: $nusach")
+                            saveSetting(context, PreferencesKeys.NUSACH, option.name)
+                            Log.d("SettingsScreen", "option: $option, nusach: $nusach")
+                        }
+                    },
+                    label = stringResource(option.displayName),
+                    toggleControl = ToggleChipToggleControl.Radio
+                )
+            }
+
+            item {
+                SecondaryTitle(stringResource(R.string.choose_font_size))
+            }
+
+            items(fontSizeOptions) { option ->
+                ToggleChip(
+                    checked = fontSize == option.name,
+                    onCheckedChanged = {
+                        scope.launch {
+                            saveSetting(context, PreferencesKeys.FONT_SIZE, option.name)
+                        }
+                    },
+                    label = stringResource(option.displayName),
+                    toggleControl = ToggleChipToggleControl.Radio
+                )
+            }
         }
     }
 }

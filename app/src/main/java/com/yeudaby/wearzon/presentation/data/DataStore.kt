@@ -6,7 +6,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.yeudaby.wearzon.R
@@ -30,7 +29,7 @@ suspend fun <T> saveSetting(context: Context, key: Preferences.Key<T>, value: T)
 object PreferencesKeys {
     val NIKUD = booleanPreferencesKey("nikud")
     val NUSACH = stringPreferencesKey("nusach")
-    val FONT_SIZE = intPreferencesKey("font_size")
+    val FONT_SIZE = stringPreferencesKey("font_size")
 }
 
 enum class NusachOption(@StringRes val displayName: Int) {
@@ -39,8 +38,10 @@ enum class NusachOption(@StringRes val displayName: Int) {
     SEFARD(R.string.sefard)
 }
 
-enum class FontSize(val value: Float) {
-    SMALL(13f),
-    MEDIUM(16f),
-    LARGE(20f)
+enum class FontSize(
+    @StringRes val displayName: Int
+) {
+    SMALL(R.string.small),
+    MEDIUM(R.string.medium),
+    LARGE(R.string.large)
 }

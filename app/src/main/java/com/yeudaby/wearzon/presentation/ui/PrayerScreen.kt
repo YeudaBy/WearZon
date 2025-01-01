@@ -1,11 +1,11 @@
 package com.yeudaby.wearzon.presentation.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.foundation.lazy.items
@@ -25,7 +26,6 @@ import androidx.wear.compose.material.Text
 import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.google.android.horologist.compose.layout.ScalingLazyColumn
 import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults
-import com.google.android.horologist.compose.layout.ScalingLazyColumnState
 import com.google.android.horologist.compose.layout.ScreenScaffold
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnState
 import com.google.android.horologist.compose.material.ListHeaderDefaults.firstItemPadding
@@ -52,7 +52,7 @@ fun PrayerScreen(prayer: PrayerOption) {
 
     var paragraphs by remember { mutableStateOf<List<String>?>(null) }
 
-    LaunchedEffect(prayer) {
+    LaunchedEffect(prayer, nusach) {
         val data = loadPrayerTexts(context)
         val prayerObj = when (prayer) {
             PrayerOption.TefilatHaderech -> data.tefilat_haderech
@@ -66,10 +66,8 @@ fun PrayerScreen(prayer: PrayerOption) {
         }
     }
 
-    val scrollState = rememberScrollState()
-
-    ScreenScaffold(scrollState = scrollState) {
-        if (paragraphs == null) return@ScreenScaffold
+    Box {
+        if (paragraphs == null) return@Box
 
         when (paragraphs!!.size > 1) {
             true -> Box {
@@ -95,39 +93,51 @@ fun PrayerScreen(prayer: PrayerOption) {
 fun Paragraph(paragraph: String, title: String) {
     val context = LocalContext.current
 
+    val nikud by readSetting(context, PreferencesKeys.NIKUD).collectAsState(true)
+    val fontSize by readSetting(
+        context,
+        PreferencesKeys.FONT_SIZE
+    ).collectAsState(FontSize.MEDIUM.name)
+
     val columnState = rememberResponsiveColumnState(
         contentPadding = ScalingLazyColumnDefaults.padding(
             first = ScalingLazyColumnDefaults.ItemType.Text,
             last = ScalingLazyColumnDefaults.ItemType.Text
         ),
     )
-    val nikud by readSetting(context, PreferencesKeys.NIKUD).collectAsState(true)
-    val fontSize by readSetting(context, PreferencesKeys.FONT_SIZE).collectAsState(FontSize.MEDIUM)
 
-    ScalingLazyColumn(
-        columnState = columnState, modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        item {
-            ResponsiveListHeader(contentPadding = firstItemPadding()) {
+    ScreenScaffold(scrollState = columnState) {
+        ScalingLazyColumn(
+            columnState = columnState, modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            item {
+                ResponsiveListHeader(contentPadding = firstItemPadding()) {
+                    Text(
+                        text = title,
+                        fontSize = 12.sp,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+            val lines = paragraph.split("\n")
+            items(lines) { line ->
                 Text(
-                    text = title,
-                    fontSize = 12.sp,
-                    textAlign = TextAlign.Center
+                    text = if (nikud == false) removeNikud(line) else line,
+                    textAlign = TextAlign.Center,
+                    fontFamily = frankRuhiLibre,
+                    fontSize = FontSize.valueOf(fontSize ?: FontSize.MEDIUM.name).toTextUnit()
                 )
             }
         }
-        val lines = paragraph.split("\n")
-        items(lines) { line ->
-            Text(
-                text = if (nikud == false) removeNikud(line) else line,
-                textAlign = TextAlign.Center,
-                fontFamily = frankRuhiLibre,
-                fontSize = (fontSize as FontSize? ?: FontSize.MEDIUM).value.sp
-            )
-        }
     }
+}
+
+fun FontSize?.toTextUnit(): TextUnit = when (this) {
+    FontSize.SMALL -> 13.sp
+    FontSize.LARGE -> 17.sp
+    else -> 15.sp
 }
 
 

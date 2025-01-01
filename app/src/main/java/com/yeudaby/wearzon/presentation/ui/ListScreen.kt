@@ -52,7 +52,6 @@ fun ListScreen(
                 }
             }
 
-
             items(PrayerOption.entries) { option ->
                 Chip(
                     label = stringResource(option.getTitle()),
@@ -63,7 +62,6 @@ fun ListScreen(
                     onClick = { onItemClick(option.name) }
                 )
             }
-
 
             item {
                 Row(
@@ -82,7 +80,7 @@ fun ListScreen(
                     )
                     Button(
                         R.drawable.baseline_info_outline_24,
-                        stringResource(R.string.info),
+                        stringResource(R.string.about),
                         onClick = navigateToInfo
                     )
                 }

@@ -25,6 +25,7 @@ import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.yeudaby.wearzon.presentation.data.PrayerOption
 import com.yeudaby.wearzon.presentation.theme.WearzonTheme
+import com.yeudaby.wearzon.presentation.ui.AboutScreen
 import com.yeudaby.wearzon.presentation.ui.ListScreen
 import com.yeudaby.wearzon.presentation.ui.PrayerScreen
 import com.yeudaby.wearzon.presentation.ui.SettingsScreen
@@ -74,7 +75,7 @@ fun WearApp() {
                     SettingsScreen()
                 }
                 composable("info") {
-                    // todo
+                    AboutScreen()
                 }
             }
         }

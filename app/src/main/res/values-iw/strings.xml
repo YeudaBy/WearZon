@@ -8,5 +8,14 @@
     <string name="edot_hamizrach">עדות המזרח</string>
     <string name="sefard">ספרד</string>
     <string name="settings">הגדרות</string>
-    <string name="info">מידע</string>
+    <string name="about">אודות</string>
+    <string name="showNikud">הצג ניקוד</string>
+    <string name="small">קטן</string>
+    <string name="medium">בינוני</string>
+    <string name="large">גדול</string>
+    <string name="choose_nusach">בחר נוסח</string>
+    <string name="choose_font_size">בחר גודל טקסט</string>
+    <string name="about_app">אפליקציה לשעונים חכמים שמביאה את התפילות אליך, בצורה נוחה, זמינה ומעוצבת במיוחד עבורך.ֿ\n\n  קרדיט: he.wikisource.org</string>
+    <string name="in_honor">האפליקציה מוקדשת לזכר הנרצחים במתקפת הטרור של השביעי באוקטובר, לזכות חזרת החטופים במהרה ולהצלחת צה\"ל ועם ישראל. יהי זכרם ברוך.</string>
+    <string name="about_me">פותח על ידי יהודה ביי, מפתח Front-End מישראל. בקרו באתר שלי בכתובת https://yeudaby.com כדי ללמוד עוד על עבודותיי.</string>
 </resources>

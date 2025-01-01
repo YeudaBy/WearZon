@@ -8,5 +8,14 @@
     <string name="edot_hamizrach">Edot Hamizrach</string>
     <string name="sefard">Sefard</string>
     <string name="settings">Settings</string>
-    <string name="info">Info</string>
+    <string name="about">about</string>
+    <string name="showNikud">Show Nikud</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+    <string name="choose_nusach">Choose Nusach</string>
+    <string name="choose_font_size">Chose Font Size</string>
+    <string name="about_app">An app for smartwatches that brings prayers to you, designed to be accessible, convenient, and beautifully crafted just for you. \n\nCredit: he.wikisource.org</string>
+    <string name="in_honor">In memory of those killed in the October 7th terror attack, to the merit of the return of the hostages, and to the success of the IDF and Am Israel. May their memory be a blessing.</string>
+    <string name="about_me">Developed by Yehuda By, a front-end developer from Israel. Visit my website at https://yeudaby.com to learn more about my work.</string>
 </resources>
