@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">וויר-זון</string>
+    <string name="hasher_yazar">אשר יצר</string>
+    <string name="bircat_hamazon">ברכת המזון</string>
+    <string name="tfilat_haderech">תפילת הדרך</string>
+    <string name="ashkenaz">אשכנז</string>
+    <string name="edot_hamizrach">עדות המזרח</string>
+    <string name="sefard">ספרד</string>
+    <string name="settings">הגדרות</string>
+    <string name="info">מידע</string>
+</resources>

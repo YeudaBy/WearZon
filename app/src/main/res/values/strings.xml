@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Wear-Zon</string>
+    <string name="hasher_yazar">Hasher Yazar</string>
+    <string name="bircat_hamazon">Bircat Hamazon</string>
+    <string name="tfilat_haderech">Tfilat Haderech</string>
+
+    <string name="ashkenaz">Ashkenaz</string>
+    <string name="edot_hamizrach">Edot Hamizrach</string>
+    <string name="sefard">Sefard</string>
+    <string name="settings">Settings</string>
+    <string name="info">Info</string>
+</resources>

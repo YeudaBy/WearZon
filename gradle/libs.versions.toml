@@ -1,0 +1,43 @@
+[versions]
+agp = "8.8.0-alpha08"
+coreSplashscreenVersion = "1.2.0-alpha02"
+datastorePreferences = "1.1.1"
+horologistVersion = "0.6.22"
+kotlin = "2.0.0"
+kotlinxSerializationJson = "1.5.0"
+moshi = "1.13.0"
+playServicesWearable = "19.0.0"
+composeBom = "2024.12.01"
+composeMaterial = "1.4.0"
+uiToolingPreview = "1.7.6"
+wearToolingPreview = "1.0.0"
+activityCompose = "1.9.3"
+
+[libraries]
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
+horologist-composables = { module = "com.google.android.horologist:horologist-composables", version.ref = "horologistVersion" }
+horologist-compose-layout = { module = "com.google.android.horologist:horologist-compose-layout", version.ref = "horologistVersion" }
+horologist-compose-material = { module = "com.google.android.horologist:horologist-compose-material", version.ref = "horologistVersion" }
+horologist-compose-rotaryinput = { module = "com.google.android.horologist:horologist-compose-rotaryInput", version.ref = "horologistVersion" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+moshi-kotlin = { module = " 'com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+play-services-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "playServicesWearable" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
+wear-tooling-preview = { group = "androidx.wear", name = "wear-tooling-preview", version.ref = "wearToolingPreview" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreenVersion" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
