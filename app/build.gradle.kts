@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 
-//    kotlin("jvm") version "1.8.0"
     kotlin("plugin.serialization") version "2.1.0"
 }
 
@@ -15,8 +14,8 @@ android {
         applicationId = "com.yeudaby.wearzon"
         minSdk = 30
         targetSdk = 34
-        versionCode = 3
-        versionName = "0.0.3"
+        versionCode = 4
+        versionName = "0.0.4"
 
     }
 

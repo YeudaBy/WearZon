@@ -1,6 +1,5 @@
 package com.yeudaby.wearzon.presentation.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -21,7 +20,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.foundation.lazy.items
+import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.HorizontalPageIndicator
+import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Text
 import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.google.android.horologist.compose.layout.ScalingLazyColumn
@@ -106,7 +107,14 @@ fun Paragraph(paragraph: String, title: String) {
         ),
     )
 
-    ScreenScaffold(scrollState = columnState) {
+    val listState = rememberScalingLazyListState()
+
+    ScreenScaffold(
+        scrollState = columnState,
+        positionIndicator = {
+            PositionIndicator(scalingLazyListState = listState)
+        }
+    ) {
         ScalingLazyColumn(
             columnState = columnState, modifier = Modifier
                 .fillMaxSize()
