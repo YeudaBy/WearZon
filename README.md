@@ -1,3 +1,6 @@
+[![Get it on Google Play](https://img.shields.io/badge/Get%20it%20on-Google%20Play-3DDC84?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.yeudaby.wearzon)
+
+
 <div dir="rtl">
 
 <img src="./assets/gr1024x500.png" alt="play graphic" style="max-height: 300px"/>
