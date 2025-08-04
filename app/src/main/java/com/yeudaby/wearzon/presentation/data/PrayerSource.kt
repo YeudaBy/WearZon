@@ -10,22 +10,17 @@ data class PrayerItem(
     val ashkenaz: List<String>,
     val sefard: List<String>,
     val edot_hamizrach: List<String>,
-)
+    val hebrewName: String,
+    val icon: String
+) {
+    fun getIcon(context: Context): Int {
+        return context.resources.getIdentifier(icon, "drawable", context.packageName)
+    }
+}
 
-@Serializable
-data class PrayerText(
-    val tefilat_haderech: PrayerItem,
-    val birkat_hamazon: PrayerItem,
-    val asher_yatzar: PrayerItem
-)
-
-fun loadPrayerTexts(context: Context): PrayerText {
+fun loadPrayerTexts(context: Context): List<PrayerItem> {
     val json = context.assets.open("prayers.json").use {
         InputStreamReader(it).readText()
     }
     return Json.decodeFromString(json)
-}
-
-enum class PrayerOption {
-    BirkatHamazon, AsherYatzar, TefilatHaderech
 }

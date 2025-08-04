@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -32,17 +31,16 @@ import com.google.android.horologist.compose.layout.rememberResponsiveColumnStat
 import com.google.android.horologist.compose.material.ListHeaderDefaults.firstItemPadding
 import com.google.android.horologist.compose.material.ResponsiveListHeader
 import com.google.android.horologist.compose.pager.PageScreenIndicatorState
-import com.yeudaby.wearzon.R
 import com.yeudaby.wearzon.presentation.data.FontSize
 import com.yeudaby.wearzon.presentation.data.NusachOption
-import com.yeudaby.wearzon.presentation.data.PrayerOption
+import com.yeudaby.wearzon.presentation.data.PrayerItem
 import com.yeudaby.wearzon.presentation.data.PreferencesKeys
 import com.yeudaby.wearzon.presentation.data.loadPrayerTexts
 import com.yeudaby.wearzon.presentation.data.readSetting
 import com.yeudaby.wearzon.presentation.theme.frankRuhiLibre
 
 @Composable
-fun PrayerScreen(prayer: PrayerOption) {
+fun PrayerScreen(prayerName: String) {
 
     val context = LocalContext.current
 
@@ -51,19 +49,22 @@ fun PrayerScreen(prayer: PrayerOption) {
         PreferencesKeys.NUSACH
     ).collectAsState(NusachOption.ASHKENAZ.name)
 
+    var prayer by remember {
+        mutableStateOf<PrayerItem?>(null)
+    }
     var paragraphs by remember { mutableStateOf<List<String>?>(null) }
 
+    LaunchedEffect(prayerName) {
+        prayer = loadPrayerTexts(context).find { it.hebrewName == prayerName }
+
+    }
+
     LaunchedEffect(prayer, nusach) {
-        val data = loadPrayerTexts(context)
-        val prayerObj = when (prayer) {
-            PrayerOption.TefilatHaderech -> data.tefilat_haderech
-            PrayerOption.AsherYatzar -> data.asher_yatzar
-            PrayerOption.BirkatHamazon -> data.birkat_hamazon
-        }
+        if (prayer == null) return@LaunchedEffect
         paragraphs = when (nusach) {
-            NusachOption.SEFARD.name -> prayerObj.sefard
-            NusachOption.EDOT_HAMIZRACH.name -> prayerObj.edot_hamizrach
-            else -> prayerObj.ashkenaz
+            NusachOption.SEFARD.name -> prayer!!.sefard
+            NusachOption.EDOT_HAMIZRACH.name -> prayer!!.edot_hamizrach
+            else -> prayer!!.ashkenaz
         }
     }
 
@@ -75,7 +76,7 @@ fun PrayerScreen(prayer: PrayerOption) {
                 val pageState = rememberPagerState { paragraphs?.size ?: 1 }
 
                 HorizontalPager(pageState, Modifier.fillMaxSize()) { page ->
-                    Paragraph(paragraphs!![page], stringResource(prayer.getTitle()))
+                    Paragraph(paragraphs!![page], prayer!!.hebrewName)
                 }
 
                 val pagerScreenState = remember { PageScreenIndicatorState(state = pageState) }
@@ -83,7 +84,7 @@ fun PrayerScreen(prayer: PrayerOption) {
             }
 
             false -> Box(Modifier.fillMaxSize()) {
-                Paragraph(paragraphs!![0], stringResource(prayer.getTitle()))
+                Paragraph(paragraphs!![0], prayer!!.hebrewName)
             }
         }
     }
@@ -146,15 +147,6 @@ fun FontSize?.toTextUnit(): TextUnit = when (this) {
     FontSize.SMALL -> 13.sp
     FontSize.LARGE -> 17.sp
     else -> 15.sp
-}
-
-
-fun PrayerOption.getTitle(): Int {
-    return when (this) {
-        PrayerOption.TefilatHaderech -> R.string.tfilat_haderech
-        PrayerOption.AsherYatzar -> R.string.hasher_yazar
-        PrayerOption.BirkatHamazon -> R.string.bircat_hamazon
-    }
 }
 
 fun removeNikud(text: String): String {

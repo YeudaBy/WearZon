@@ -6,8 +6,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -24,7 +30,8 @@ import com.google.android.horologist.compose.material.Chip
 import com.google.android.horologist.compose.material.ListHeaderDefaults.firstItemPadding
 import com.google.android.horologist.compose.material.ResponsiveListHeader
 import com.yeudaby.wearzon.R
-import com.yeudaby.wearzon.presentation.data.PrayerOption
+import com.yeudaby.wearzon.presentation.data.PrayerItem
+import com.yeudaby.wearzon.presentation.data.loadPrayerTexts
 
 
 @OptIn(ExperimentalHorologistApi::class)
@@ -34,6 +41,15 @@ fun ListScreen(
     navigateToInfo: () -> Unit,
     onItemClick: (id: String) -> Unit,
 ) {
+
+    val context = LocalContext.current
+
+    var items by remember {
+        mutableStateOf<List<PrayerItem>>(emptyList())
+    }
+
+    LaunchedEffect(Unit) { items = loadPrayerTexts(context) }
+
     val columnState = rememberResponsiveColumnState(
         contentPadding = ScalingLazyColumnDefaults.padding(
             first = ScalingLazyColumnDefaults.ItemType.Text,
@@ -52,14 +68,14 @@ fun ListScreen(
                 }
             }
 
-            items(PrayerOption.entries) { option ->
+            items(items) { option ->
                 Chip(
-                    label = stringResource(option.getTitle()),
+                    label = option.hebrewName,
                     icon = {
-                        Icon(painterResource(option.getIcon()), null)
+                        Icon(painterResource(option.getIcon(context)), null)
                     },
                     largeIcon = true,
-                    onClick = { onItemClick(option.name) }
+                    onClick = { onItemClick(option.hebrewName) }
                 )
             }
 
@@ -87,10 +103,4 @@ fun ListScreen(
             }
         }
     }
-}
-
-fun PrayerOption.getIcon() = when (this) {
-    PrayerOption.BirkatHamazon -> R.drawable.baseline_fastfood_24
-    PrayerOption.AsherYatzar -> R.drawable.baseline_family_restroom_24
-    PrayerOption.TefilatHaderech -> R.drawable.baseline_drive_eta_24
 }

@@ -1,8 +1,3 @@
-/* While this template provides a good starting point for using Wear Compose, you can always
- * take a look at https://github.com/android/wear-os-samples/tree/main/ComposeStarter to find the
- * most up to date changes to the libraries and their usages.
- */
-
 package com.yeudaby.wearzon.presentation
 
 import android.os.Bundle
@@ -23,7 +18,6 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import com.yeudaby.wearzon.presentation.data.PrayerOption
 import com.yeudaby.wearzon.presentation.theme.WearzonTheme
 import com.yeudaby.wearzon.presentation.ui.AboutScreen
 import com.yeudaby.wearzon.presentation.ui.ListScreen
@@ -68,8 +62,7 @@ fun WearApp() {
                     }
                 }
                 composable("prayer/{id}") {
-                    val name = it.arguments?.getString("id")!!
-                    PrayerScreen(prayer = PrayerOption.entries.first { it.name == name })
+                    PrayerScreen(prayerName = it.arguments?.getString("id")!!)
                 }
                 composable("settings") {
                     SettingsScreen()
