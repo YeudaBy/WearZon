@@ -62,7 +62,10 @@ fun WearApp() {
                     }
                 }
                 composable("prayer/{id}") {
-                    PrayerScreen(prayerName = it.arguments?.getString("id")!!)
+                    PrayerScreen(
+                        prayerName = it.arguments?.getString("id")!!,
+                        back = { navController.navigateUp() }
+                    )
                 }
                 composable("settings") {
                     SettingsScreen()
