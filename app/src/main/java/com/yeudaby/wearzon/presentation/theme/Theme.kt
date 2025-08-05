@@ -19,7 +19,7 @@ fun WearzonTheme(
 ) {
     MaterialTheme(
         colors = Colors(
-            primary = Color(0xffd9d9d9),
+            primary = Color(0xFFDAE1FF),
             secondary = Color(0xff4d4d4d)
         ),
         content = content
