@@ -62,8 +62,8 @@ fun PrayerScreen(prayerName: String) {
     LaunchedEffect(prayer, nusach) {
         if (prayer == null) return@LaunchedEffect
         paragraphs = when (nusach) {
-            NusachOption.SEFARD.name -> prayer!!.sefard
-            NusachOption.EDOT_HAMIZRACH.name -> prayer!!.edot_hamizrach
+            NusachOption.SEFARD.name -> prayer!!.sefard ?: prayer!!.ashkenaz
+            NusachOption.EDOT_HAMIZRACH.name -> prayer!!.edot_hamizrach ?: prayer!!.ashkenaz
             else -> prayer!!.ashkenaz
         }
     }

@@ -8,8 +8,8 @@ import java.io.InputStreamReader
 @Serializable
 data class PrayerItem(
     val ashkenaz: List<String>,
-    val sefard: List<String>,
-    val edot_hamizrach: List<String>,
+    val sefard: List<String>? = null,
+    val edot_hamizrach: List<String>? = null,
     val hebrewName: String,
     val icon: String
 ) {
