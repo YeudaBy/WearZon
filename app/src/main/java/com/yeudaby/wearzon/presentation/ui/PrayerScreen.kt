@@ -12,15 +12,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.HorizontalPageIndicator
+import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Text
 import com.google.android.horologist.annotations.ExperimentalHorologistApi
@@ -31,6 +35,7 @@ import com.google.android.horologist.compose.layout.rememberResponsiveColumnStat
 import com.google.android.horologist.compose.material.ListHeaderDefaults.firstItemPadding
 import com.google.android.horologist.compose.material.ResponsiveListHeader
 import com.google.android.horologist.compose.pager.PageScreenIndicatorState
+import com.yeudaby.wearzon.R
 import com.yeudaby.wearzon.presentation.data.FontSize
 import com.yeudaby.wearzon.presentation.data.NusachOption
 import com.yeudaby.wearzon.presentation.data.PrayerItem
@@ -39,8 +44,9 @@ import com.yeudaby.wearzon.presentation.data.loadPrayerTexts
 import com.yeudaby.wearzon.presentation.data.readSetting
 import com.yeudaby.wearzon.presentation.theme.frankRuhiLibre
 
+@OptIn(ExperimentalHorologistApi::class)
 @Composable
-fun PrayerScreen(prayerName: String) {
+fun PrayerScreen(prayerName: String, back: () -> Unit) {
 
     val context = LocalContext.current
 
@@ -73,10 +79,27 @@ fun PrayerScreen(prayerName: String) {
 
         when (paragraphs!!.size > 1) {
             true -> Box {
-                val pageState = rememberPagerState { paragraphs?.size ?: 1 }
+                val pageState = rememberPagerState { (paragraphs?.size ?: 1) + 1 }
 
                 HorizontalPager(pageState, Modifier.fillMaxSize()) { page ->
-                    Paragraph(paragraphs!![page], prayer!!.hebrewName)
+                    if (page < paragraphs!!.size) {
+                        Paragraph(paragraphs!![page], prayer!!.hebrewName)
+                    } else {
+                        // Last page - back button
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(24.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Button(onClick = back) {
+                                Icon(
+                                    painter = painterResource(R.drawable.check_check),
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                    }
                 }
 
                 val pagerScreenState = remember { PageScreenIndicatorState(state = pageState) }
