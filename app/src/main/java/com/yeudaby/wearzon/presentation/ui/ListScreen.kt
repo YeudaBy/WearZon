@@ -87,15 +87,15 @@ fun ListScreen(
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 8.dp)
+                        .padding(top = 12.dp)
                 ) {
                     Button(
-                        R.drawable.baseline_settings_24,
+                        R.drawable.settings,
                         stringResource(R.string.settings),
                         onClick = navigateToSettings
                     )
                     Button(
-                        R.drawable.baseline_info_outline_24,
+                        R.drawable.badge_info,
                         stringResource(R.string.about),
                         onClick = navigateToInfo
                     )
